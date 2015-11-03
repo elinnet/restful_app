@@ -5,9 +5,13 @@ var userListData = [];
 $(document).ready(function(){
   populateTable();
 
+  $('#userList').on('click', 'td a.linkshowuser', showUserInfo);
+  $('#userList table tbody').on('click', 'td a.linkdeleteuser', deleteUser);
+
 });
 
-$('#userList').on('click', 'td a.linkshowuser', showUserInfo);
+
+
 
 function populateTable(){
   var tableContent = '';
@@ -104,4 +108,43 @@ function showUserInfo(event){
           return false;
       }
   }
+}
+  // Delete User
+
+  function deleteUser(event) {
+
+    event.preventDefault();
+
+    // Pop up a confirmation dialog
+    var confirmation = confirm('Are you sure you want to delete this user?');
+
+    // Check and make sure the user confirmed
+    if (confirmation === true) {
+
+        // If they did, do our delete
+        $.ajax({
+            type: 'DELETE',
+            url: '/users/deleteuser/' + $(this).attr('rel')
+        }).done(function( response ) {
+
+            // Check for a successful (blank) response
+            if (response.msg === '') {
+            }
+            else {
+                alert('Error: ' + response.msg);
+            }
+
+            // Update the table
+            populateTable();
+
+        });
+
+    }
+    else {
+
+        // If they said no to the confirm, do nothing
+        return false;
+
+    }
+
 }
