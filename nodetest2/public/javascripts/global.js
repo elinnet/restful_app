@@ -4,8 +4,10 @@ var userListData = [];
 
 $(document).ready(function(){
   populateTable();
-	$('#userList').on('click', 'td a.linkshowuser', showUserInfo);
+
 });
+
+$('#userList').on('click', 'td a.linkshowuser', showUserInfo);
 
 function populateTable(){
   var tableContent = '';
@@ -49,7 +51,7 @@ function showUserInfo(event){
   // Add User
   function addUser(event) {
       event.preventDefault();
-
+      console.log('addUser');
       // Super basic validation - increase errorCount variable if any fields are blank
       var errorCount = 0;
       $('#addUser input').each(function(index, val) {
@@ -58,6 +60,7 @@ function showUserInfo(event){
 
       // Check and make sure errorCount's still at zero
       if(errorCount === 0) {
+
 
           // If it is, compile all user info into one object
           var newUser = {
